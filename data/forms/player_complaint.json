@@ -1,0 +1,15 @@
+{
+  "id": "player_complaint",
+  "title": "Скарга на гравця",
+  "description": "Поскаржтеся на порушення правил іншим гравцем.",
+  "color": "#e74c3c",
+  "emoji": "⚠️",
+  "ping_role_id": "1465412392186810439",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Roblox або Discord порушника", "placeholder": "@username / @username/ID", "required": true },
+    { "label": "Яке правило було порушено та коли? (Суть ситуації)", "multiline": true, "required": true },
+    { "label": "Наявність доказів (Так/Ні)", "placeholder": "Так / Ні", "required": true }
+  ]
+}

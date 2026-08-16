@@ -1,0 +1,17 @@
+{
+  "id": "job_application",
+  "title": "Заявка на посаду у грі",
+  "description": "Подайте заявку, щоб отримати посаду в нашій лікарні.",
+  "color": "#2ecc71",
+  "emoji": "🩺",
+  "ping_role_id": "1486536184229527603",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Ваш нікнейм у Roblox", "placeholder": "@username", "required": true },
+    { "label": "Ваш реальний вік (OOC вік)", "placeholder": "Напр.: 17", "required": true },
+    { "label": "Бажана посада (напр.: Медична сестра, Санітар)", "placeholder": "Медична сестра / Санітар / Інше", "required": true },
+    { "label": "Ваш досвід у RolePlay (опишіть максимально розгорнуто)", "multiline": true, "required": true },
+    { "label": "Чи перебуваєте ви у нашій Roblox-групі? (Так/Ні)", "placeholder": "Так / Ні", "required": true }
+  ]
+}

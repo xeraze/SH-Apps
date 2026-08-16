@@ -1,0 +1,15 @@
+{
+  "id": "bug_report",
+  "title": "Повідомлення про помилку (баг)",
+  "description": "Повідомте про помилку/баг, який ви виявили.",
+  "color": "#f1c40f",
+  "emoji": "⚙️",
+  "ping_role_id": "1514713733077794957",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Місце виявлення багу (Discord-сервер чи Roblox-плейс)", "required": true },
+    { "label": "Детальний опис проблеми (Як відтворився баг?)", "multiline": true, "required": true },
+    { "label": "Наявність фото/відео фіксації багу (Так/Ні)", "placeholder": "Так / Ні", "required": true }
+  ]
+}

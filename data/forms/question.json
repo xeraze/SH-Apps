@@ -1,0 +1,14 @@
+{
+  "id": "question",
+  "title": "Запитання",
+  "description": "Поставте запитання до директорату сервера.",
+  "color": "#3498db",
+  "emoji": "❔",
+  "ping_role_id": "",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Тема звернення (Коротко)", "placeholder": "Коротка тема", "required": true },
+    { "label": "Суть запитання (Розгорнуто та з деталями)", "multiline": true, "required": true }
+  ]
+}

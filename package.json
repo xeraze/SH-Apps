@@ -1,0 +1,19 @@
+{
+  "name": "sh-apps",
+  "version": "1.0.0",
+  "description": "SH Apps — заявки, ідеї, новини, кол-центр",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.16.3",
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "typescript": "^5.7.2"
+  }
+}

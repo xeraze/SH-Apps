@@ -1,0 +1,14 @@
+{
+  "id": "idea",
+  "title": "Ідея / Пропозиція",
+  "description": "Поділіться ідеєю або пропозицією щодо проекту.",
+  "color": "#f39c12",
+  "emoji": "💡",
+  "ping_role_id": "",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Тема пропозиції", "placeholder": "Коротка тема ідеї", "required": true },
+    { "label": "Опис пропозиції", "multiline": true, "placeholder": "Опишіть ідею максимально детально", "required": true }
+  ]
+}

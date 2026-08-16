@@ -1,0 +1,16 @@
+{
+  "id": "appeal",
+  "title": "Апеляція покарання",
+  "description": "Оскаржте покарання, якщо вважаєте його несправедливим.",
+  "color": "#9b59b6",
+  "emoji": "⚖️",
+  "ping_role_id": "",
+  "channel_id": "1515047781914378421",
+  "accepted_channel_id": "",
+  "questions": [
+    { "label": "Ваш нікнейм у Roblox", "placeholder": "@username", "required": true },
+    { "label": "Отримане покарання та його причина", "multiline": true, "required": true },
+    { "label": "Детальний опис ситуації з вашого боку", "multiline": true, "required": false },
+    { "label": "Чому ми маємо зняти чи пом'якшити покарання? ", "placeholder": "Обґрунтуйте свою позицію","multiline": true, "required": true }
+  ]
+}
