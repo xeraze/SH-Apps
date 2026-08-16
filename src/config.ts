@@ -26,6 +26,7 @@ export const config = {
   callCenterOperatorChannelId: env("CALL_CENTER_OPERATOR_CHANNEL_ID"),
 
   embedColor: 0x34373c,
+  dividerImage: env("SUBMISSION_DIVIDER_IMAGE") || "https://i.imgur.com/EzvcPiU.png",
 } as const;
 
 export const DATA_DIR = `${process.cwd()}/data`;

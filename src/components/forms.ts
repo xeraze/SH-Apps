@@ -396,42 +396,42 @@ export function buildFormModal(form: Form): ModalBuilder {
   return modal;
 }
 
-export function buildSubmissionEmbed(sub: Submission, form: Form): EmbedBuilder {
-  const embed = new EmbedBuilder({ color: colorInt(form.color) })
-    .setTitle(form.title)
-    .setDescription("Нова заявка");
-  if (sub.author_icon) {
-    embed.setAuthor({ name: sub.author_name, iconURL: sub.author_icon });
-  } else {
-    embed.setAuthor({ name: sub.author_name });
-  }
-  for (const a of sub.answers) {
-    embed.addFields({
-      name: a.label.slice(0, 256),
-      value: a.value.slice(0, 1024) || "—",
-      inline: false,
-    });
-  }
-  embed.addFields({
-    name: "Статус:",
-    value: SUBMISSION_STATUS_LABELS[sub.status] ?? sub.status,
-    inline: false,
+export function buildSubmissionEmbeds(sub: Submission, form: Form): EmbedBuilder[] {
+  const color = colorInt(form.color);
+  const thumb = sub.author_icon || undefined;
+
+  const header = new EmbedBuilder({ color })
+    .setTitle(`Прийшла нова заявка ・ ${form.title}`.slice(0, 256))
+    .setDescription(`Відправник заявки: **${sub.author_name}** <@${sub.user_id}>`);
+  if (thumb) header.setThumbnail(thumb);
+  if (config.dividerImage) header.setImage(config.dividerImage);
+  header.addFields({
+    name: "Статус",
+    value: `\`${SUBMISSION_STATUS_LABELS[sub.status] ?? sub.status}\``,
+    inline: true,
   });
+  if (sub.reviewer_id) {
+    header.addFields({ name: "Перевіряючий", value: `<@${sub.reviewer_id}>`, inline: true });
+  }
   const reasonFinal = sub.status === "accepted" || sub.status === "rejected";
-  embed.addFields({
-    name: "Причина:",
+  header.addFields({
+    name: "Причина винесення рішення",
     value: sub.review_reason
       ? sub.review_reason.slice(0, 1024)
       : reasonFinal
-        ? "не вказано"
-        : "Очікує розглядаючого",
+        ? "`не вказано`"
+        : "`Очікує розглядаючого`",
     inline: false,
   });
-  if (sub.reviewer_id) {
-    embed.addFields({ name: "Перевірив:", value: `<@${sub.reviewer_id}>`, inline: false });
-  }
-  attachMediaToEmbed(embed, sub.attachments ?? []);
-  return embed;
+
+  const answers = new EmbedBuilder({ color }).setTitle("Відповіді на питання прописані в заявці");
+  if (thumb) answers.setThumbnail(thumb);
+  const lines = sub.answers
+    .map((a) => `**${a.label}**\n> \`\`\`${a.value}\`\`\``)
+    .join("\n\n");
+  answers.setDescription(lines.slice(0, 4000));
+  attachMediaToEmbed(answers, sub.attachments ?? []);
+  return [header, answers];
 }
 
 export function buildReviewSelect(sub: Submission): StringSelectMenuBuilder {
@@ -567,7 +567,7 @@ async function publishAcceptedSubmission(client: Client, sub: Submission, form: 
   }
   if (!channel || !("send" in channel)) return;
   try {
-    await channel.send({ content: `<@${sub.user_id}>`, embeds: [buildSubmissionEmbed(sub, form)] });
+    await channel.send({ content: `<@${sub.user_id}>`, embeds: buildSubmissionEmbeds(sub, form) });
   } catch {
     log("warn", "Не вдалося опублікувати прийняту заявку");
   }
@@ -580,7 +580,7 @@ async function refreshSubmissionMessage(client: Client, sub: Submission, form: F
     if (ch && "messages" in ch) {
       const msg = await ch.messages.fetch(sub.message_id);
       await msg.edit({
-        embeds: [buildSubmissionEmbed(sub, form)],
+        embeds: buildSubmissionEmbeds(sub, form),
         components: buildReviewView(sub),
       });
     }
@@ -710,7 +710,7 @@ async function handleFormDecision(
             title: "Розпочато діалог",
             description:
               `Ви почали діалог з <@${sub.user_id}> щодо заявки «${form.title}».\n\n` +
-              "Повідомлення автора з ЛС приходитимуть сюди, ваші повідомлення надсилатимуться автору в ЛС.",
+              "Повідомлення автора з ПП приходитимуть сюди, ваші повідомлення надсилатимуться автору в ПП.",
           }),
         ],
         components: buildThreadControls(updated),
@@ -727,7 +727,7 @@ async function handleFormDecision(
       updated,
       form,
       "Розпочато діалог щодо вашої заявки",
-      `Перевіряючий розпочав діалог щодо вашої заявки «${form.title}». Подальша взаємодія відбуватиметься у ЛС.`,
+      `Перевіряючий розпочав діалог щодо вашої заявки «${form.title}». Подальша взаємодія відбуватиметься у ПП.`,
       guild,
     );
     return;
@@ -788,7 +788,7 @@ export async function handleFormSubmit(interaction: Interaction): Promise<void> 
   }
   const message = await channel.send({
     content: form.ping_role_id ? `<@&${form.ping_role_id}>` : undefined,
-    embeds: [buildSubmissionEmbed(sub, form)],
+    embeds: buildSubmissionEmbeds(sub, form),
     components: buildReviewView(sub),
   });
   updateSubmission(sub.id, { message_id: String(message.id), channel_id: String(channel.id) });
@@ -800,7 +800,7 @@ export async function handleFormSubmit(interaction: Interaction): Promise<void> 
   await interaction.reply({
     content:
       "✅ Вашу анкету надіслано на розгляд.\n\n" +
-      "📎 Якщо потрібно прикріпити файли або зображення — надішліть їх сюди (у цей канал або в ЛС боту) протягом 2 хвилин.",
+      "📎 Якщо потрібно прикріпити файли або зображення — надішліть їх у ЛС боту протягом 2 хвилин.",
     flags: MessageFlags.Ephemeral,
   });
 }
@@ -822,8 +822,7 @@ export async function handlePendingAttachmentMessage(client: Client, message: Me
     return;
   }
   const isDm = !message.guild;
-  const isChannel = !!pending.channelId && message.channelId === pending.channelId;
-  if (!isDm && !isChannel) return;
+  if (!isDm) return;
   if (message.attachments.size === 0) return;
   const urls = [...message.attachments.values()].map((a) => a.url);
   const updated = addSubmissionAttachments(pending.submissionId, urls);
