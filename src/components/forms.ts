@@ -32,6 +32,7 @@ import {
   getSubmission,
   getSubmissionDialogueByUser,
   loadForms,
+  loadSubmissions,
   saveForm,
   updateSubmission,
   type Form,
@@ -792,41 +793,25 @@ export async function handleFormSubmit(interaction: Interaction): Promise<void> 
     components: buildReviewView(sub),
   });
   updateSubmission(sub.id, { message_id: String(message.id), channel_id: String(channel.id) });
-  pendingAttachments.set(String(interaction.user.id), {
-    submissionId: sub.id,
-    channelId: interaction.channelId ?? null,
-    expiresAt: Date.now() + 120_000,
-  });
   await interaction.reply({
     content:
       "✅ Вашу анкету надіслано на розгляд.\n\n" +
-      "📎 Якщо потрібно прикріпити файли або зображення — надішліть їх у ЛС боту протягом 2 хвилин.",
+      "📎 Якщо потрібно прикріпити файли або зображення — надішліть їх боту в ЛС у будь-який момент, вони будуть додані до вашої заявки.",
     flags: MessageFlags.Ephemeral,
   });
 }
 
-interface PendingAttachments {
-  submissionId: string;
-  channelId: string | null;
-  expiresAt: number;
-}
-
-export const pendingAttachments = new Map<string, PendingAttachments>();
-
 export async function handlePendingAttachmentMessage(client: Client, message: Message): Promise<void> {
   if (message.author.bot) return;
-  const pending = pendingAttachments.get(String(message.author.id));
-  if (!pending) return;
-  if (Date.now() > pending.expiresAt) {
-    pendingAttachments.delete(String(message.author.id));
-    return;
-  }
-  const isDm = !message.guild;
-  if (!isDm) return;
+  if (message.guild) return;
   if (message.attachments.size === 0) return;
+  const subs = loadSubmissions()
+    .filter((s) => String(s.user_id) === String(message.author.id) && s.status !== "accepted" && s.status !== "rejected")
+    .sort((a, b) => (b.message_id ?? "").localeCompare(a.message_id ?? ""));
+  const sub = subs[0];
+  if (!sub) return;
   const urls = [...message.attachments.values()].map((a) => a.url);
-  const updated = addSubmissionAttachments(pending.submissionId, urls);
-  pendingAttachments.delete(String(message.author.id));
+  const updated = addSubmissionAttachments(sub.id, urls);
   if (!updated) return;
   const form = getForm(updated.form_id);
   if (form) await refreshSubmissionMessage(client, updated, form);

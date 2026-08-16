@@ -17,7 +17,11 @@ export function buildCommands(): RESTPostAPIChatInputApplicationCommandsJSONBody
     .setName("bidmenu")
     .setDescription("Панель анкет: обрання, редагування ембедів, публікація меню");
 
-  return [news.toJSON(), bidmenu.toJSON()];
+  const status = new SlashCommandBuilder()
+    .setName("status")
+    .setDescription("Інформація про бота");
+
+  return [news.toJSON(), bidmenu.toJSON(), status.toJSON()];
 }
 
 export async function registerCommands(client: Client): Promise<void> {

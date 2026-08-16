@@ -1,6 +1,7 @@
 import { Interaction } from "discord.js";
 import { executeBidMenu } from "../commands/bidmenu";
 import { executeNews } from "../commands/news";
+import { executeStatus } from "../commands/status";
 import { handleNewsEdit, handleNewsModal, handleNewsPublish, handleNewsCancel } from "../components/news";
 import {
   handleFormMenuSelect,
@@ -23,6 +24,8 @@ export async function handleInteraction(interaction: Interaction): Promise<void>
         return executeNews(interaction);
       case "bidmenu":
         return executeBidMenu(interaction);
+      case "status":
+        return executeStatus(interaction);
     }
     return;
   }
