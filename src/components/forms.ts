@@ -535,15 +535,13 @@ async function notifySubmissionAuthor(
 ): Promise<void> {
   const embed = baseEmbed({ title, description });
   const isFinal = sub.status === "accepted" || sub.status === "rejected";
-  embed.addFields({
-    name: "Причина:",
-    value: sub.review_reason
-      ? sub.review_reason.slice(0, 1024)
-      : isFinal
-        ? "Не вказана"
-        : "Очікує розглядаючого",
-    inline: false,
-  });
+  if (isFinal) {
+    embed.addFields({
+      name: "Причина:",
+      value: sub.review_reason ? sub.review_reason.slice(0, 1024) : "Не вказана",
+      inline: false,
+    });
+  }
   if (sub.reviewer_id) {
     const reviewer = await client.users.fetch(sub.reviewer_id).catch(() => null);
     embed.setFooter({ text: `Перевірив: ${reviewer?.username ?? sub.reviewer_id}` });
