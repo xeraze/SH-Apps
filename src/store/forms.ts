@@ -19,7 +19,6 @@ export interface Form {
   emoji?: string;
   ping_role_id?: string;
   channel_id?: string;
-  accepted_channel_id?: string;
   questions: FormQuestion[];
 }
 

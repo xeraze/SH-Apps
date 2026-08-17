@@ -6,12 +6,11 @@
   "emoji": "🩺",
   "ping_role_id": "1486536184229527603",
   "channel_id": "1538594599444946974",
-  "accepted_channel_id": "",
   "questions": [
     { "label": "Ваш нікнейм у Roblox", "placeholder": "@username", "required": true },
     { "label": "Ваш реальний вік (OOC вік)", "placeholder": "Напр.: 17", "required": true },
-    { "label": "Бажана посада (напр.: Медична сестра, Санітар)", "placeholder": "Медична сестра / Санітар / Інше", "required": true },
-    { "label": "Ваш досвід у RolePlay (опишіть максимально розгорнуто)", "multiline": true, "required": true },
-    { "label": "Чи перебуваєте ви у нашій Roblox-групі? (Так/Ні)", "placeholder": "Так / Ні", "required": true }
+    { "label": "Бажана посада (Іерархія в меню серверу)", "placeholder": "Медична сестра / Санітар / Інше", "required": true },
+    { "label": "Ваш досвід у RolePlay", "placeholder": "Опишіть максимально розгорнуто", "multiline": true, "required": true },
+    { "label": "Чи перебуваєте ви у нашій Roblox-групі?", "placeholder": "Так / Ні", "required": true }
   ]
 }

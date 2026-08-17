@@ -6,7 +6,6 @@
   "emoji": "❔",
   "ping_role_id": "",
   "channel_id": "1538594501935759460",
-  "accepted_channel_id": "",
   "questions": [
     { "label": "Тема звернення (Коротко)", "placeholder": "Коротка тема", "required": true },
     { "label": "Суть запитання (Розгорнуто та з деталями)", "multiline": true, "required": true }

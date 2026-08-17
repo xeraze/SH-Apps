@@ -540,24 +540,6 @@ async function notifySubmissionAuthor(
   log("info", `Повідомлення автору анкети ${sub.user_id}: статус=${sub.status}, причина="${sub.review_reason ?? ""}"`);
 }
 
-async function publishAcceptedSubmission(client: Client, sub: Submission, form: Form): Promise<void> {
-  if (!form.accepted_channel_id) return;
-  let channel = client.channels.cache.get(form.accepted_channel_id) ?? null;
-  if (!channel || !("send" in channel)) {
-    try {
-      channel = await client.channels.fetch(form.accepted_channel_id);
-    } catch {
-      return;
-    }
-  }
-  if (!channel || !("send" in channel)) return;
-  try {
-    await channel.send({ content: `<@${sub.user_id}>`, embeds: buildSubmissionEmbeds(sub, form) });
-  } catch {
-    log("warn", "Не вдалося опублікувати прийняту заявку");
-  }
-}
-
 async function refreshSubmissionMessage(client: Client, sub: Submission, form: Form): Promise<void> {
   if (!sub.message_id || !sub.channel_id) return;
   try {
@@ -631,8 +613,7 @@ async function handleFormDecision(
     const description = accepted
       ? `Вашу заявку «${form.title}» прийнято.`
       : `Вашу заявку «${form.title}» відхилено.`;
-    if (accepted) await publishAcceptedSubmission(interaction.client as Client, updated, form);
-    await notifySubmissionAuthor(
+    if (accepted) await notifySubmissionAuthor(
       interaction.client as Client,
       updated,
       form,

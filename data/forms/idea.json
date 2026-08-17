@@ -6,7 +6,6 @@
   "emoji": "💡",
   "ping_role_id": "",
   "channel_id": "1538594501935759460",
-  "accepted_channel_id": "",
   "questions": [
     { "label": "Тема пропозиції", "placeholder": "Коротка тема ідеї", "required": true },
     { "label": "Опис пропозиції", "multiline": true, "placeholder": "Опишіть ідею максимально детально", "required": true }

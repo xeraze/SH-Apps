@@ -6,7 +6,6 @@
   "emoji": "⚖️",
   "ping_role_id": "",
   "channel_id": "1538594501935759460",
-  "accepted_channel_id": "",
   "questions": [
     { "label": "Ваш нікнейм у Roblox", "placeholder": "@username", "required": true },
     { "label": "Отримане покарання та його причина", "multiline": true, "required": true },

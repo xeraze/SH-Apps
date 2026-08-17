@@ -6,10 +6,9 @@
   "emoji": "⚙️",
   "ping_role_id": "1514713733077794957",
   "channel_id": "1538594501935759460",
-  "accepted_channel_id": "",
   "questions": [
-    { "label": "Місце виявлення багу (Discord-сервер чи Roblox-плейс)", "required": true },
-    { "label": "Детальний опис проблеми (Як відтворився баг?)", "multiline": true, "required": true },
-    { "label": "Наявність фото/відео фіксації багу (Так/Ні)", "placeholder": "Так / Ні", "required": true }
+    { "label": "Місце виявлення багу", "placeholder": "Discord-сервер чи Roblox-плейс", "required": true },
+    { "label": "Детальний опис проблеми", "placeholder": "Як відтворився баг?", "multiline": true, "required": true },
+    { "label": "Наявність фото/відео фіксації багу", "placeholder": "Так / Ні", "required": true }
   ]
 }
