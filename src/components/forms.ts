@@ -458,21 +458,6 @@ export function buildReviewView(sub: Submission): ActionRowBuilder<any>[] {
   return [selectRow(buildReviewSelect(sub))];
 }
 
-export function buildThreadControls(sub: Submission): ActionRowBuilder<ButtonBuilder>[] {
-  const final = sub.status === "accepted" || sub.status === "rejected";
-  const accept = new ButtonBuilder()
-    .setCustomId(`form_accept:${sub.id}`)
-    .setLabel("Прийняти")
-    .setStyle(ButtonStyle.Success)
-    .setDisabled(final);
-  const reject = new ButtonBuilder()
-    .setCustomId(`form_reject:${sub.id}`)
-    .setLabel("Відхилити")
-    .setStyle(ButtonStyle.Danger)
-    .setDisabled(final);
-  return [buttonRow(accept, reject)];
-}
-
 export function buildReasonModal(sub: Submission, action: string): ModalBuilder {
   const reason = new TextInputBuilder()
     .setCustomId("reason")
@@ -603,7 +588,6 @@ async function refreshThreadControls(client: Client, sub: Submission): Promise<v
             description: reasonText,
           }),
         ],
-        components: buildThreadControls(sub),
       });
     }
   } catch {}
@@ -710,10 +694,10 @@ async function handleFormDecision(
             title: "Розпочато діалог",
             description:
               `Ви почали діалог з <@${sub.user_id}> щодо заявки «${form.title}».\n\n` +
-              "Повідомлення автора з ПП приходитимуть сюди, ваші повідомлення надсилатимуться автору в ПП.",
+              "Повідомлення автора з ПП приходитимуть сюди, ваші повідомлення надсилатимуться автору в ПП.\n\n" +
+              "Рішення по заявці приймається через меню вибору в каналі заявок.",
           }),
         ],
-        components: buildThreadControls(updated),
       })
       .catch(() => null);
     updateSubmission(sub.id, {
