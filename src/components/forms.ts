@@ -420,7 +420,7 @@ export function buildSubmissionEmbeds(sub: Submission, form: Form): EmbedBuilder
     value: sub.review_reason
       ? sub.review_reason.slice(0, 1024)
       : reasonFinal
-        ? "`не вказано`"
+        ? "`Не вказана`"
         : "`Очікує розглядаючого`",
     inline: false,
   });
@@ -540,12 +540,13 @@ async function notifySubmissionAuthor(
     value: sub.review_reason
       ? sub.review_reason.slice(0, 1024)
       : isFinal
-        ? "не вказано"
+        ? "Не вказана"
         : "Очікує розглядаючого",
     inline: false,
   });
   if (sub.reviewer_id) {
-    embed.setFooter({ text: `Перевірив: <@${sub.reviewer_id}>` });
+    const reviewer = await client.users.fetch(sub.reviewer_id).catch(() => null);
+    embed.setFooter({ text: `Перевірив: ${reviewer?.username ?? sub.reviewer_id}` });
   }
   await notifyUser(
     client,
@@ -596,7 +597,7 @@ async function refreshThreadControls(client: Client, sub: Submission): Promise<v
       const msg = await ch.messages.fetch(sub.thread_controls_id);
       const reasonText =
         sub.review_reason ||
-        (sub.status === "accepted" || sub.status === "rejected" ? "не вказано" : "Очікує розглядаючого");
+        (sub.status === "accepted" || sub.status === "rejected" ? "Не вказана" : "Очікує розглядаючого");
       await msg.edit({
         embeds: [
           baseEmbed({
