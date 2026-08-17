@@ -8,7 +8,6 @@ import {
 import { registerCommands } from "./commands/register";
 import { config } from "./config";
 import { handleInteraction } from "./interactions";
-import { handlePendingAttachmentMessage } from "./components/forms";
 import { logErrorToChannel, userLabel } from "./lib/errors";
 import { log } from "./lib/logger";
 import { handleCallCenterMessage } from "./listeners/callcenter";
@@ -40,7 +39,6 @@ client.once(Events.ClientReady, async (c) => {
 
 client.on(Events.MessageCreate, async (message) => {
   try {
-    await handlePendingAttachmentMessage(client, message);
     await handleCallCenterMessage(client, message);
     await handleMessage(client, message);
   } catch (e) {

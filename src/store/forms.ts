@@ -43,18 +43,17 @@ export interface Submission {
   review_reason: string | null;
   thread_id: string | null;
   thread_controls_id: string | null;
-  attachments: string[];
 }
 
 const FORMS_DIR = path.join(DATA_DIR, "forms");
 const SUBMISSIONS_FILE = path.join(DATA_DIR, "submissions.json");
 
 export const SUBMISSION_STATUS_LABELS: Record<SubmissionStatus, string> = {
-  new: "Нова заявка",
-  reviewing: "На розгляді",
-  accepted: "Прийнята",
-  rejected: "Відхилена",
-  dialogue: "Діалог розпочато",
+  new: "Р СњР С•Р Р†Р В° Р В·Р В°РЎРЏР Р†Р С”Р В°",
+  reviewing: "Р СњР В° РЎР‚Р С•Р В·Р С–Р В»РЎРЏР Т‘РЎвЂ“",
+  accepted: "Р СџРЎР‚Р С‘Р в„–Р Р…РЎРЏРЎвЂљР В°",
+  rejected: "Р вЂ™РЎвЂ“Р Т‘РЎвЂ¦Р С‘Р В»Р ВµР Р…Р В°",
+  dialogue: "Р вЂќРЎвЂ“Р В°Р В»Р С•Р С– РЎР‚Р С•Р В·Р С—Р С•РЎвЂЎР В°РЎвЂљР С•",
 };
 
 export function loadForms(): Form[] {
@@ -121,19 +120,9 @@ export function createSubmission(input: {
     review_reason: null,
     thread_id: null,
     thread_controls_id: null,
-    attachments: [],
   };
   const list = loadSubmissions();
   list.push(sub);
-  saveSubmissions(list);
-  return sub;
-}
-
-export function addSubmissionAttachments(id: string, urls: string[]): Submission | null {
-  const list = loadSubmissions();
-  const sub = list.find((s) => s.id === id);
-  if (!sub) return null;
-  sub.attachments = [...(sub.attachments ?? []), ...urls];
   saveSubmissions(list);
   return sub;
 }

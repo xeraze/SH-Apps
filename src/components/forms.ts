@@ -7,7 +7,6 @@ import {
   EmbedBuilder,
   Guild,
   Interaction,
-  Message,
   MessageFlags,
   ModalActionRowComponentBuilder,
   ModalBuilder,
@@ -20,19 +19,17 @@ import {
   ThreadChannel,
 } from "discord.js";
 import { config } from "../config";
-import { attachMediaToEmbed, baseEmbed, serverInfoButton } from "../lib/embeds";
+import { baseEmbed, serverInfoButton } from "../lib/embeds";
 import { log } from "../lib/logger";
 import { notifyUser } from "../lib/notify";
 import { memberHasRole } from "../lib/permissions";
 import {
   SUBMISSION_STATUS_LABELS,
-  addSubmissionAttachments,
   createSubmission,
   getForm,
   getSubmission,
   getSubmissionDialogueByUser,
   loadForms,
-  loadSubmissions,
   saveForm,
   updateSubmission,
   type Form,
@@ -431,7 +428,6 @@ export function buildSubmissionEmbeds(sub: Submission, form: Form): EmbedBuilder
     .map((a) => `**${a.label}**\n> \`\`\`${a.value}\`\`\``)
     .join("\n\n");
   answers.setDescription(lines.slice(0, 4000));
-  attachMediaToEmbed(answers, sub.attachments ?? []);
   return [header, answers];
 }
 
@@ -758,30 +754,9 @@ export async function handleFormSubmit(interaction: Interaction): Promise<void> 
   });
   updateSubmission(sub.id, { message_id: String(message.id), channel_id: String(channel.id) });
   await interaction.reply({
-    content:
-      "✅ Вашу анкету надіслано на розгляд.\n\n" +
-      "📎 Якщо потрібно прикріпити файли або зображення — надішліть їх боту в ЛС у будь-який момент, вони будуть додані до вашої заявки.",
+    content: "✅ Вашу анкету надіслано на розгляд.",
     flags: MessageFlags.Ephemeral,
   });
-}
-
-export async function handlePendingAttachmentMessage(client: Client, message: Message): Promise<void> {
-  if (message.author.bot) return;
-  if (message.guild) return;
-  if (message.attachments.size === 0) return;
-  const subs = loadSubmissions()
-    .filter((s) => String(s.user_id) === String(message.author.id) && s.status !== "accepted" && s.status !== "rejected")
-    .sort((a, b) => (b.message_id ?? "").localeCompare(a.message_id ?? ""));
-  const sub = subs[0];
-  if (!sub) return;
-  const urls = [...message.attachments.values()].map((a) => a.url);
-  const updated = addSubmissionAttachments(sub.id, urls);
-  if (!updated) return;
-  const form = getForm(updated.form_id);
-  if (form) await refreshSubmissionMessage(client, updated, form);
-  await message
-    .reply(`✅ Файли прикріплено до анкети ${form ? `«${form.title}»` : ""}.`)
-    .catch(() => undefined);
 }
 
 export async function handleFormReview(interaction: Interaction): Promise<void> {
