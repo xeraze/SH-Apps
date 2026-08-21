@@ -49,11 +49,11 @@ const FORMS_DIR = path.join(DATA_DIR, "forms");
 const SUBMISSIONS_FILE = path.join(DATA_DIR, "submissions.json");
 
 export const SUBMISSION_STATUS_LABELS: Record<SubmissionStatus, string> = {
-  new: "Р СњР С•Р Р†Р В° Р В·Р В°РЎРЏР Р†Р С”Р В°",
-  reviewing: "Р СњР В° РЎР‚Р С•Р В·Р С–Р В»РЎРЏР Т‘РЎвЂ“",
-  accepted: "Р СџРЎР‚Р С‘Р в„–Р Р…РЎРЏРЎвЂљР В°",
-  rejected: "Р вЂ™РЎвЂ“Р Т‘РЎвЂ¦Р С‘Р В»Р ВµР Р…Р В°",
-  dialogue: "Р вЂќРЎвЂ“Р В°Р В»Р С•Р С– РЎР‚Р С•Р В·Р С—Р С•РЎвЂЎР В°РЎвЂљР С•",
+  new: "Нова заявка",
+  reviewing: "На розгляді",
+  accepted: "Прийнята",
+  rejected: "Відхилена",
+  dialogue: "Діалог розпочато",
 };
 
 export function loadForms(): Form[] {
