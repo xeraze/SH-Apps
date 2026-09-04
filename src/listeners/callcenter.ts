@@ -191,6 +191,7 @@ export async function handleCallCenterMessage(client: Client, message: Message):
 
     const opTicket = getTicketByOperatorThread(thread.id);
     if (opTicket) {
+      if (opTicket.status !== "dialogue") return;
       const operatorRoleId = config.callCenterOperatorRoleId ?? "";
       if (!message.member?.roles.cache.has(operatorRoleId)) {
         return;
