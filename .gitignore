@@ -1,8 +1,11 @@
 .env
 node_modules/
 dist/
+dist.zip
 *.tsbuildinfo
 .venv/
 venv/
 __pycache__/
 *.pyc
+data/callcenter.json
+data/submissions.json
