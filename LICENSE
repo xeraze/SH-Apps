@@ -1,11 +1,21 @@
-Copyright © 2026 Sloboda Hospital. All rights reserved.
+MIT License
 
-This repository and its original contents, including source code, markup, styles, documentation, and original media, are the property of the copyright holder.
+Copyright (c) 2026 Sloboda Hospital
 
-No permission is granted to copy, reproduce, modify, adapt, merge, publish, distribute, sublicense, sell, or create derivative works from the original contents of this repository without prior written permission from the copyright holder.
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-No commercial or non-commercial reuse of the original source code is permitted without prior written permission.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-The public availability of this repository does not itself grant a license to reuse its original contents. Access to and use of GitHub and its platform features remains subject to GitHub's Terms of Service.
-
-Third-party software, dependencies, fonts, icons, and other materials are not covered by this notice where their respective licenses provide otherwise.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
