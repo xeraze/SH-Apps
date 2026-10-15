@@ -3,6 +3,7 @@
 # Sloboda Hospital — Applications Bot
 
 A modular Discord bot project for the Sloboda Hospital community, focused on handling applications and related server workflows.
+
 ![SHApps1](assets/SH%20Apps%201.png)
 ![SHApps2](assets/SH%20Apps%202.png)
 
